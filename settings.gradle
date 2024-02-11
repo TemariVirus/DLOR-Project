@@ -1,2 +1,2 @@
-rootProject.name = 'Landmark Recognition'
+rootProject.name = 'DLOR Deployment'
 include ':app'
