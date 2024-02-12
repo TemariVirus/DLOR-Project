@@ -296,4 +296,10 @@
             android:entries="@array/tfe_ic_devices"
             android:prompt="@string/tfe_ic_device" />
     </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/playPause"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_baseline_add" />
 </LinearLayout>

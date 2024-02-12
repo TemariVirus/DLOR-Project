@@ -83,7 +83,7 @@ public class LegacyCameraConnectionFragment extends Fragment {
               sizes[i++] = new Size(size.width, size.height);
             }
             Size previewSize =
-                CameraConnectionFragment.chooseOptimalSize(
+                org.tensorflow.lite.examples.classification.CameraConnectionFragment.chooseOptimalSize(
                     sizes, desiredSize.getWidth(), desiredSize.getHeight());
             parameters.setPreviewSize(previewSize.getWidth(), previewSize.getHeight());
             camera.setDisplayOrientation(90);
@@ -203,5 +203,17 @@ public class LegacyCameraConnectionFragment extends Fragment {
       if (ci.facing == CameraInfo.CAMERA_FACING_BACK) return i;
     }
     return -1; // No camera found
+  }
+
+  public void pauseCamera() {
+    if (camera != null) {
+      camera.stopPreview();
+    }
+  }
+
+  public void resumeCamera() {
+      if (camera != null) {
+      camera.startPreview();
+      }
   }
 }
