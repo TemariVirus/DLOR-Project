@@ -61,6 +61,7 @@ import org.tensorflow.lite.examples.classification.env.ImageUtils;
 import org.tensorflow.lite.examples.classification.env.Logger;
 import org.tensorflow.lite.examples.classification.tflite.Classifier.Device;
 import org.tensorflow.lite.examples.classification.tflite.Classifier.Recognition;
+import org.tensorflow.lite.examples.classification.PausableCamera;
 
 public abstract class CameraActivity extends AppCompatActivity
         implements OnImageAvailableListener,
@@ -101,6 +102,7 @@ public abstract class CameraActivity extends AppCompatActivity
     private ImageView plusImageView, minusImageView, playPauseImageView;
     private Spinner deviceSpinner;
     private TextView threadsTextView;
+    private PausableCamera cameraFragment;
 
     private Device device = Device.CPU;
     private int numThreads = -1;
@@ -265,6 +267,10 @@ public abstract class CameraActivity extends AppCompatActivity
      */
     @Override
     public void onImageAvailable(final ImageReader reader) {
+        if (isPaused) {
+            return;
+        }
+
         // We need wait until we have some size from onPreviewSizeChosen
         if (previewWidth == 0 || previewHeight == 0) {
             return;
@@ -487,8 +493,10 @@ public abstract class CameraActivity extends AppCompatActivity
             camera2Fragment.setCamera(cameraId);
             fragment = camera2Fragment;
         } else {
-            fragment =
+            LegacyCameraConnectionFragment frag =
                     new LegacyCameraConnectionFragment(this, getLayoutId(), getDesiredPreviewFrameSize());
+            cameraFragment = frag;
+            fragment = frag;
         }
 
         getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
@@ -639,12 +647,16 @@ public abstract class CameraActivity extends AppCompatActivity
         } else if (v.getId() == R.id.playPause) {
             if (isPaused) {
                 playPauseImageView.setImageResource(R.drawable.ic_baseline_add);
-
+                if (cameraFragment != null) {
+                    cameraFragment.resumeCamera();
+                }
                 isPaused = false;
                 readyForNextImage();
             } else {
                 playPauseImageView.setImageResource(R.drawable.ic_baseline_remove);
-
+                if (cameraFragment != null) {
+                    cameraFragment.pauseCamera();
+                }
                 isPaused = true;
             }
         }
