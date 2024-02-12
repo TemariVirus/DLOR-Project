@@ -646,14 +646,14 @@ public abstract class CameraActivity extends AppCompatActivity
             threadsTextView.setText(String.valueOf(numThreads));
         } else if (v.getId() == R.id.playPause) {
             if (isPaused) {
-                playPauseImageView.setImageResource(R.drawable.ic_baseline_add);
+                playPauseImageView.setImageResource(R.drawable.pause);
                 if (cameraFragment != null) {
                     cameraFragment.resumeCamera();
                 }
                 isPaused = false;
                 readyForNextImage();
             } else {
-                playPauseImageView.setImageResource(R.drawable.ic_baseline_remove);
+                playPauseImageView.setImageResource(R.drawable.play);
                 if (cameraFragment != null) {
                     cameraFragment.pauseCamera();
                 }

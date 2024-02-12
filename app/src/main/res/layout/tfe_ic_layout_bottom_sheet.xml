@@ -301,5 +301,5 @@
         android:id="@+id/playPause"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_baseline_add" />
+        app:srcCompat="@drawable/pause" />
 </LinearLayout>
